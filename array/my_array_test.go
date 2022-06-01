@@ -8,11 +8,10 @@ import (
 
 func TestAdd(t *testing.T) {
 	// 限制大小的数组
-	arr, err := New(3)
-	assert.Nil(t, err)
+	arr := New(3)
 
 	// 测试能否正常添加
-	err = arr.Add(1)
+	err := arr.Add(1)
 	assert.Nil(t, err)
 	assert.Equal(t, arr.Data(), []int{1})
 
@@ -26,7 +25,7 @@ func TestAdd(t *testing.T) {
 	assert.Equal(t, arr.Data(), []int{1, 2, 3})
 
 	// 不限制大小的数组
-	arr, err = New()
+	arr = New()
 	assert.Nil(t, err)
 	err = arr.Add(1)
 	assert.Nil(t, err)
@@ -34,11 +33,10 @@ func TestAdd(t *testing.T) {
 }
 
 func TestData(t *testing.T) {
-	arr, err := New(3)
-	assert.Nil(t, err)
+	arr := New(3)
 
 	// 测试获取数组结果正确
-	err = arr.Add(1)
+	err := arr.Add(1)
 	assert.Nil(t, err)
 	err = arr.Add(2)
 	assert.Nil(t, err)
@@ -49,11 +47,10 @@ func TestData(t *testing.T) {
 
 func TestInsert(t *testing.T) {
 	// 限制大小的数组
-	arr, err := New(4)
-	assert.Nil(t, err)
+	arr := New(4)
 
 	// 测试能否正常添加
-	err = arr.Insert(0, 1)
+	err := arr.Insert(0, 1)
 	assert.Nil(t, err)
 	assert.Equal(t, arr.Data(), []int{1})
 
@@ -91,7 +88,7 @@ func TestInsert(t *testing.T) {
 	assert.Equal(t, arr.Data(), []int{2, 3, 1})
 
 	// 不限制大小的数组
-	arr, err = New()
+	arr = New()
 	assert.Nil(t, err)
 	err = arr.Add(1)
 	assert.Nil(t, err)

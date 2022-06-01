@@ -16,28 +16,24 @@ type MyArray struct {
 	size   int
 }
 
-func New(sizes ...int) (Array, error) {
+func New(sizes ...int) Array {
 	size := -1
 	if len(sizes) > 0 {
-		if sizes[0] > 0 {
-			size = sizes[0]
-		} else {
-			return nil, errors.New("size must be greater than 0")
-		}
+		size = sizes[0]
 	}
 
 	return &MyArray{
 		size:   size,
 		data:   []int{},
 		length: 0,
-	}, nil
+	}
 }
 
 func (m *MyArray) Add(elem int) error {
 	m.lock.Lock()
 	defer m.lock.Unlock()
 
-	if m.size >= 0 && m.length+1 > m.size {
+	if m.size != -1 && m.length+1 > m.size {
 		return errors.New("the current data volume has reached the maximum")
 	}
 
@@ -54,7 +50,7 @@ func (m *MyArray) Insert(index, elem int) error {
 		return errors.New("the current data volume has reached the maximum")
 	}
 
-	if index < 0 || (index != 0 && index > m.length) {
+	if index < 0 || index > m.length {
 		text := fmt.Sprintf("index must be between [0:%d(length))", m.length)
 		return errors.New(text)
 	}
@@ -120,6 +116,14 @@ func (m *MyArray) Pop() (int, error) {
 	m.data = m.data[:m.length-1]
 	m.length--
 	return elem, nil
+}
+
+func (m *MyArray) Clear() {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+
+	m.data = []int{}
+	m.length = 0
 }
 
 func (m *MyArray) Set(index, elem int) error {
@@ -235,4 +239,12 @@ func (m *MyArray) Data() []int {
 	data := make([]int, m.length)
 	copy(data, m.data)
 	return data
+}
+
+func (m *MyArray) Len() int {
+	return m.length
+}
+
+func (m *MyArray) Cap() int {
+	return m.size
 }

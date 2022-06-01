@@ -1,6 +1,6 @@
-package array
+package linkedList
 
-type Array interface {
+type LinkedList interface {
 	Add(elem int) error
 	Insert(index, elem int) error
 	Remove(index int) error
@@ -13,7 +13,6 @@ type Array interface {
 	Get(index int) (int, error)
 	Tail() (int, error)
 	Head() (int, error)
-	Sort() (Array, error)
 	Data() []int
 	Len() int
 	Cap() int
